@@ -41,6 +41,7 @@ export abstract class BaseExperienceFrame<
     protected readonly internalExperience: InternalExperience;
     protected readonly onChange: EventListener;
     protected url: string;
+    protected origin_url: string
     private readonly MESSAGE_RESPONSE_TIMEOUT = 5000;
 
     public iframe: EmbeddingIFrameElement | null = null;
@@ -67,6 +68,11 @@ export abstract class BaseExperienceFrame<
         this.transformedContentOptions = transformedContentOptions;
         this.experienceId = experienceIdentifier;
         this.url = this.validateBaseUrl(frameOptions.url);
+        if (frameOptions.origin_url != undefined) {
+            this.origin_url = frameOptions.origin_url
+        } else {
+            this.origin_url = this.url
+        }
 
         this.controlOptions.eventManager.addEventListener(this.experienceId, this.onMessage, true);
         this.initializeMutationObserver();
@@ -94,7 +100,7 @@ export abstract class BaseExperienceFrame<
             messageEvent.data
         );
 
-        this.iframe?.contentWindow?.postMessage(message, this.url);
+        this.iframe?.contentWindow?.postMessage(message, this.origin_url);
 
         if (messageEvent.eventName === MessageEventName.ACKNOWLEDGE) {
             return Promise.resolve(new SuccessResponse());

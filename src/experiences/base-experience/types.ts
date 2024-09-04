@@ -51,6 +51,7 @@ export type FrameOptions = {
     resizeHeightOnSizeChangedEvent?: boolean;
     withIframePlaceholder?: boolean | HTMLElement;
     className?: string;
+    origin_url?: string;
     onChange?: EventListener;
 };
 
