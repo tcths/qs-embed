@@ -114,9 +114,9 @@ export abstract class BaseExperienceFrame<
     console.log(messageEvent.data)    
     console.log('origin_url')
     console.log(this.origin_url)
-	this.iframe?.contentWindow?.postMessage(message, 'http://localhost:3000')
 	//this.iframe?.contentWindow?.postMessage(message, 'http://localhost:3000')
-    // this.iframe?.contentWindow?.postMessage(message, this.origin_url);
+	//this.iframe?.contentWindow?.postMessage(message, 'http://localhost:3000')
+    this.iframe?.contentWindow?.postMessage(message, this.origin_url);
 
         if (messageEvent.eventName === MessageEventName.ACKNOWLEDGE) {
             return Promise.resolve(new SuccessResponse());
@@ -149,10 +149,10 @@ export abstract class BaseExperienceFrame<
             };
 
             window.addEventListener('message', eventHandler);
-            //setTimeout(() => {
-            //    window.removeEventListener('message', eventHandler);
-            //    reject(`${messageEvent.eventName} timed out`);
-            //}, this.MESSAGE_RESPONSE_TIMEOUT);
+            setTimeout(() => {
+                window.removeEventListener('message', eventHandler);
+                reject(`${messageEvent.eventName} timed out`);
+            }, this.MESSAGE_RESPONSE_TIMEOUT);
         });
     };
 
