@@ -69,13 +69,13 @@ export abstract class BaseExperienceFrame<
         this.experienceId = experienceIdentifier;
         this.url = this.validateBaseUrl(frameOptions.url);
 
-    console.log('logging frame options origin url')
-    console.log(frameOptions.origin_url)
+    console.error('logging frame options origin url')
+    console.error(frameOptions.origin_url)
 	if (frameOptions.origin_url != undefined) {
-            console.log('using origin url')
+            console.error('using origin url')
     	    this.origin_url = frameOptions.origin_url
         } else {
-	    console.log('no origin url')
+	    console.error('no origin url')
             this.origin_url = this.url
         }
 
