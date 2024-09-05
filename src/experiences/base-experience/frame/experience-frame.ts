@@ -108,9 +108,9 @@ export abstract class BaseExperienceFrame<
     
     console.log('origin_url')
     console.log(this.origin_url)
+	this.iframe?.contentWindow?.postMessage(message, 'http://localhost:3000')
 	//this.iframe?.contentWindow?.postMessage(message, 'http://localhost:3000')
-	//this.iframe?.contentWindow?.postMessage(message, 'http://localhost:3000')
-    this.iframe?.contentWindow?.postMessage(message, this.origin_url);
+    // this.iframe?.contentWindow?.postMessage(message, this.origin_url);
 
         if (messageEvent.eventName === MessageEventName.ACKNOWLEDGE) {
             return Promise.resolve(new SuccessResponse());
