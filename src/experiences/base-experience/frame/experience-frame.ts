@@ -149,10 +149,10 @@ export abstract class BaseExperienceFrame<
             };
 
             window.addEventListener('message', eventHandler);
-            //setTimeout(() => {
-            //    window.removeEventListener('message', eventHandler);
-            //    reject(`${messageEvent.eventName} timed out`);
-            //}, this.MESSAGE_RESPONSE_TIMEOUT);
+            setTimeout(() => {
+                window.removeEventListener('message', eventHandler);
+                reject(`${messageEvent.eventName} timed out`);
+            }, this.MESSAGE_RESPONSE_TIMEOUT);
         });
     };
 
