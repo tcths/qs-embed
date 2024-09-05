@@ -69,13 +69,13 @@ export abstract class BaseExperienceFrame<
         this.experienceId = experienceIdentifier;
         this.url = this.validateBaseUrl(frameOptions.url);
 
-    console.error('logging frame options origin url')
-    console.error(frameOptions.origin_url)
+    //this.logger.error('logging frame options origin url')
+    //this.logger.error(frameOptions.origin_url)
 	if (frameOptions.origin_url != undefined) {
-            console.error('using origin url')
+            //this.logger.error('using origin url')
     	    this.origin_url = frameOptions.origin_url
         } else {
-	    console.error('no origin url')
+	    //this.logger.error('no origin url')
             this.origin_url = this.url
         }
 
@@ -105,7 +105,8 @@ export abstract class BaseExperienceFrame<
             messageEvent.data
         );
 
-        this.iframe?.contentWindow?.postMessage(message, this.origin_url);
+	this.iframe?.contentWindow?.postMessage(message, 'http://localhost:3000')
+        //this.iframe?.contentWindow?.postMessage(message, this.origin_url);
 
         if (messageEvent.eventName === MessageEventName.ACKNOWLEDGE) {
             return Promise.resolve(new SuccessResponse());
