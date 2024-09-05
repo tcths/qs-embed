@@ -106,6 +106,12 @@ export abstract class BaseExperienceFrame<
             messageEvent.data
         );
     
+    console.log('message')
+    console.log(messageEvent.eventName)
+    console.log(messageEvent.eventTarget)
+    console.log(eventId)
+    console.log(messageEvent.message)
+    console.log(messageEvent.data)    
     console.log('origin_url')
     console.log(this.origin_url)
 	this.iframe?.contentWindow?.postMessage(message, 'http://localhost:3000')
