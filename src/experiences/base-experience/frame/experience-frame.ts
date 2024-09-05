@@ -94,57 +94,59 @@ export abstract class BaseExperienceFrame<
             throw new Error(`Cannot send ${messageEvent.eventName}: No experience frame found`);
         }
 
-        const eventId = v4();
-        const message = new PostMessageEvent(
-            messageEvent.eventName,
-            messageEvent.eventTarget,
-            eventId,
-            Date.now(),
-            SDK_VERSION,
-            messageEvent.message,
-            messageEvent.data
-        );
+        throw new Error(`Cannot send ${messageEvent.eventName}: No experience frame found`);
 
-	this.iframe?.contentWindow?.postMessage(message, 'http://localhost:3000')
-	//this.iframe?.contentWindow?.postMessage(message, 'http://localhost:3000')
-        //this.iframe?.contentWindow?.postMessage(message, this.origin_url);
+        // const eventId = v4();
+        // const message = new PostMessageEvent(
+        //     messageEvent.eventName,
+        //     messageEvent.eventTarget,
+        //     eventId,
+        //     Date.now(),
+        //     SDK_VERSION,
+        //     messageEvent.message,
+        //     messageEvent.data
+        // );
 
-        if (messageEvent.eventName === MessageEventName.ACKNOWLEDGE) {
-            return Promise.resolve(new SuccessResponse());
-        }
+	// this.iframe?.contentWindow?.postMessage(message, 'http://localhost:3000')
+	// //this.iframe?.contentWindow?.postMessage(message, 'http://localhost:3000')
+    //     //this.iframe?.contentWindow?.postMessage(message, this.origin_url);
 
-        return new Promise((resolve, reject) => {
-            const eventHandler = (
-                event: MessageEvent<
-                    PostMessageEvent<
-                        MessageEventName,
-                        | {success: false; errorCode: string; errors?: string}
-                        | {
-                              success: true;
-                          }
-                    >
-                >
-            ) => {
-                const responseMessageEvent = event.data;
-                if (responseMessageEvent?.eventId === eventId) {
-                    window.removeEventListener('message', eventHandler);
+    //     if (messageEvent.eventName === MessageEventName.ACKNOWLEDGE) {
+    //         return Promise.resolve(new SuccessResponse());
+    //     }
 
-                    if (responseMessageEvent.message?.success === true) {
-                        resolve(new SuccessResponse());
-                    } else if (responseMessageEvent.message?.success === false) {
-                        resolve(new ErrorResponse(responseMessageEvent.message));
-                    } else {
-                        resolve(new DataResponse(responseMessageEvent.message));
-                    }
-                }
-            };
+    //     return new Promise((resolve, reject) => {
+    //         const eventHandler = (
+    //             event: MessageEvent<
+    //                 PostMessageEvent<
+    //                     MessageEventName,
+    //                     | {success: false; errorCode: string; errors?: string}
+    //                     | {
+    //                           success: true;
+    //                       }
+    //                 >
+    //             >
+    //         ) => {
+    //             const responseMessageEvent = event.data;
+    //             if (responseMessageEvent?.eventId === eventId) {
+    //                 window.removeEventListener('message', eventHandler);
 
-            window.addEventListener('message', eventHandler);
-            setTimeout(() => {
-                window.removeEventListener('message', eventHandler);
-                reject(`${messageEvent.eventName} timed out`);
-            }, this.MESSAGE_RESPONSE_TIMEOUT);
-        });
+    //                 if (responseMessageEvent.message?.success === true) {
+    //                     resolve(new SuccessResponse());
+    //                 } else if (responseMessageEvent.message?.success === false) {
+    //                     resolve(new ErrorResponse(responseMessageEvent.message));
+    //                 } else {
+    //                     resolve(new DataResponse(responseMessageEvent.message));
+    //                 }
+    //             }
+    //         };
+
+    //         window.addEventListener('message', eventHandler);
+    //         setTimeout(() => {
+    //             window.removeEventListener('message', eventHandler);
+    //             reject(`${messageEvent.eventName} timed out`);
+    //         }, this.MESSAGE_RESPONSE_TIMEOUT);
+    //     });
     };
 
     public buildParameterString = (parameters?: ParametersAsObject) => {
