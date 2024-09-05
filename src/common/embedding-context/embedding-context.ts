@@ -163,7 +163,7 @@ export class EmbeddingContext implements IEmbeddingContext {
         const unrecognizedFrameOptionNames = Object.keys(frameOptions).filter(key => !recognizedKeys.includes(key));
 
         if (unrecognizedFrameOptionNames.length > 0) {
-            const warnMessage = `${methodName} is called with unrecognized properties`;
+            const warnMessage = `${methodName} is called with unrecognized properties. Such as`;
             frameOptions.onChange?.(
                 new ChangeEvent(ChangeEventName.UNRECOGNIZED_FRAME_OPTIONS, ChangeEventLevel.WARN, warnMessage, {
                     unrecognizedFrameOptions: unrecognizedFrameOptionNames,
