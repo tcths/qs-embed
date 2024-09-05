@@ -105,8 +105,8 @@ export abstract class BaseExperienceFrame<
             messageEvent.data
         );
 
-	this.iframe?.contentWindow?.postMessage(message, 'http://localhost:3000')
-	this.iframe?.contentWindow?.postMessage(message, 'http://localhost:3000')
+	//this.iframe?.contentWindow?.postMessage(message, 'http://localhost:3000')
+	//this.iframe?.contentWindow?.postMessage(message, 'http://localhost:3000')
         //this.iframe?.contentWindow?.postMessage(message, this.origin_url);
 
         if (messageEvent.eventName === MessageEventName.ACKNOWLEDGE) {
